@@ -36,7 +36,7 @@ function stringBrackets(str) {
   return false;
 }
 
-console.log(stringBrackets("()(())"));
+console.log(stringBrackets("(())"));
 
 //this is my aproach to solve the problem but it not efficient need improvement on my thinking i am working on in, google it the solution
 
