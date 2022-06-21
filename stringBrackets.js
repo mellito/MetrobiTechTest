@@ -17,10 +17,17 @@ function stringBrackets(str) {
   const arrayStr = str.split("");
   if (arrayStr.length % 2 === 0) {
     while (arrayStr.length > 0) {
-      const last = arrayStr.pop();
-      const first = arrayStr.shift();
-      if (brackets.indexOf(last) - 1 !== brackets.indexOf(first)) {
-        return false;
+      if (
+        brackets.indexOf(arrayStr[0]) !== -1 &&
+        brackets[brackets.indexOf(arrayStr[0]) + 1] === arrayStr[1]
+      ) {
+        arrayStr.splice(0, 2);
+      } else {
+        const last = arrayStr.pop();
+        const first = arrayStr.shift();
+        if (brackets.indexOf(last) - 1 !== brackets.indexOf(first)) {
+          return false;
+        }
       }
     }
 
@@ -29,4 +36,41 @@ function stringBrackets(str) {
   return false;
 }
 
-console.log(stringBrackets("{((}))}"));
+console.log(stringBrackets("()(())"));
+
+//this is my aproach to solve the problem but it not efficient need improvement on my thinking i am working on in, google it the solution
+
+function areBracketsBalanced(expr) {
+  let stack = [];
+  for (let i = 0; i < expr.length; i++) {
+    let x = expr[i];
+    if (x == "(" || x == "[" || x == "{") {
+      stack.push(x);
+      continue;
+    }
+    if (stack.length == 0) return false;
+    let check;
+    switch (x) {
+      case ")":
+        check = stack.pop();
+        console.log(check);
+        if (check == "{" || check == "[") return false;
+        break;
+      case "}":
+        check = stack.pop();
+        if (check == "(" || check == "[") return false;
+        break;
+      case "]":
+        check = stack.pop();
+        if (check == "(" || check == "{") return false;
+        break;
+    }
+  }
+  return stack.length == 0;
+}
+let expr = "[()](())";
+console.log(areBracketsBalanced(expr));
+
+// this aproach is clever and efficient i understand what is happening in the code
+// he create a array variable to store the openbreakers and when is not a open bracket, with a switch statement, consult if is
+// the corresponding closing bracket if not return false and using  the method pop take out the last element of the array
